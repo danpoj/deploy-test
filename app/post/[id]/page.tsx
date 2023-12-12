@@ -1,5 +1,6 @@
 import GoBack from '@/app/_component/go-back'
 import { Post } from '@/app/page'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: {
@@ -11,6 +12,8 @@ export default async function Page({ params }: Props) {
   const post = (await fetch(`https://jsonplaceholder.typicode.com/posts/${params.id}`).then((res) =>
     res.json()
   )) as Post
+
+  if (Object.keys(post).length === 0) notFound()
 
   return (
     <div className='h-screen p-4 max-w-[60rem] mx-auto'>
